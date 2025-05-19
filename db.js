@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 
+
+require('dotenv').config();
+const mongokey = process.env.mongokey;
+
+mongoose.connect(mongokey);
+
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
