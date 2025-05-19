@@ -3,8 +3,9 @@ const mongoose = require("mongoose");
 
 require('dotenv').config();
 const mongokey = process.env.mongokey;
+console.log("connected to ")
+mongoose.connect("mongodb+srv://prasannasahoo0806:pua5dRtvJRTYxvGm@cluster0.lx9jyi5.mongodb.net/course_selling_app");
 
-mongoose.connect(mongokey);
 
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
@@ -44,18 +45,18 @@ const purchaseSchema = new Schema({
 
 
 
-const UserModel = mongoose.model('users', userSchema);
-const adminModel = mongoose.model('users', adminSchema);
-const courseModel = mongoose.model('users', courseSchema);
-const purchaseModel = mongoose.model('users', purchaseSchema);
+const userModel = mongoose.model('users', userSchema);
+const adminModel = mongoose.model('admin', adminSchema);
+const courseModel = mongoose.model('courses', courseSchema);
+const purchaseModel = mongoose.model('purchase', purchaseSchema);
 
 
 
 
 
 
-modeule.exports = {
-    UserModel,
+module.exports = {
+    userModel,
     adminModel,
     courseModel,
     purchaseModel
