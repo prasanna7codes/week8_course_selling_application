@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 
 
-require('dotenv').config();
-const mongokey = process.env.mongokey;
-console.log("connected to ")
-mongoose.connect("mongodb+srv://prasannasahoo0806:pua5dRtvJRTYxvGm@cluster0.lx9jyi5.mongodb.net/course_selling_app");
+
 
 
 const Schema = mongoose.Schema;
@@ -13,7 +10,7 @@ const ObjectId = Schema.ObjectId;
 const userSchema = new Schema({
   firstName: String,
   lastName: String,
-  _id: ObjectId,
+  //_id: ObjectId,
   email: {type: String, unique: true},
   password: String
 });
@@ -22,24 +19,25 @@ const userSchema = new Schema({
 const adminSchema = new Schema({
   firstName: String,
   lastName: String,
-  _id: ObjectId,
+  //_id: ObjectId,
   email: {type: String, unique: true},
   password: String
 });
 
-  const courseSchema = new Schema({
+  const courseSchema = new Schema({ 
   title : String,
   description : String,
   price : Number,
   imageUrl : String,
-  creatorid : ObjectId
+  creatorid : { type: ObjectId, ref: 'admin' }
 });
 
 
 
 const purchaseSchema = new Schema({
-  userId : ObjectId,
-  courseid : ObjectId
+  userId: { type: ObjectId, ref: 'users' },
+  courseid: { type: ObjectId, ref: 'courses' }
+
 });
 
 
