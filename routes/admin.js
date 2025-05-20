@@ -7,7 +7,8 @@ Jwt_admin_secret="pqrst"
 
 const adminRouter = Router();
 
-const {adminModel}= require ("../db")
+const {adminModel}= require ("../db");
+const { adminMiddleware } = require("../middleware/admin");
 
 adminRouter.post('/signup',async(req,res)=>{
 
@@ -64,7 +65,22 @@ adminRouter.post('/signin',async(req,res)=>{
 })
 
 
-adminRouter.post('/course',(req,res)=>{
+adminRouter.post('/course',adminMiddleware,async (req,res)=>{
+ const{title,description,imageUrl,price}=req.body;
+ const adminId= req.userId;
+
+ const course =await adminModel.create({
+    title,description,imageUrl,price,creatorId :adminId
+ })
+
+
+ res.json({
+    message : " course created",
+    course_num : course._id
+ })
+
+
+
     
 })
 
