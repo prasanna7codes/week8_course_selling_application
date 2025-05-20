@@ -8,6 +8,8 @@ Jwt_admin_secret="pqrst"
 const adminRouter = Router();
 
 const {adminModel}= require ("../db");
+const {courseModel}= require ("../db");
+
 const { adminMiddleware } = require("../middleware/admin");
 
 adminRouter.post('/signup',async(req,res)=>{
@@ -69,14 +71,14 @@ adminRouter.post('/course',adminMiddleware,async (req,res)=>{
  const{title,description,imageUrl,price}=req.body;
  const adminId= req.userId;
 
- const course =await adminModel.create({
+ const course =await courseModel.create({
     title,description,imageUrl,price,creatorId :adminId
  })
 
 
  res.json({
     message : " course created",
-    course_num : course._id
+    course_Id: course._id
  })
 
 
@@ -85,13 +87,37 @@ adminRouter.post('/course',adminMiddleware,async (req,res)=>{
 })
 
 
-adminRouter.put('/course',(req,res)=>{
+adminRouter.put('/course',adminMiddleware,async(req,res)=>{
+
+    const{title,description,imageUrl,price,course_Id}=req.body;
+ const adminId= req.userId;
+
+ const course =await courseModel.updateOne({_id:course_Id,
+    creatorId:adminId
+ },// so that the creator who created the course can only make changes in the id of the course he created 
+    {
+    title,description,imageUrl,price
+ })
+
+
+
+  res.json({
+    message : " course updated",
+    course_Id: course._id
+ })
     
 })
 
 
-adminRouter.get('/course/bulk',(req,res)=>{
-    
+adminRouter.get('/course/bulk',adminMiddleware,async(req,res)=>{
+    const adminId= req.userId;
+    const courses = await courseModel.find({
+        creatorId :adminId
+    })// this will find all the courses belonging to the adminId
+
+    res.json({
+        your_courses : courses
+    })
 })
 
 

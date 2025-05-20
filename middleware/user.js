@@ -5,7 +5,7 @@ const Jwt_user_secret = "abcd1234";
 
 function userMiddleware(req,res,next){
    const token = req.headers.token;
-   const decoded= jwt.verify(token,jwt_user_secret)
+   const decoded= jwt.verify(token,Jwt_user_secret)
 
    if(decoded){
     req.userId=decoded.userId
