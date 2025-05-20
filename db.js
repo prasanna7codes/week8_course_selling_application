@@ -44,7 +44,7 @@ const purchaseSchema = new Schema({
 
 
 const userModel = mongoose.model('users', userSchema);
-const adminModel = mongoose.model('admin', adminSchema);
+const adminModel = mongoose.model('admins', adminSchema);
 const courseModel = mongoose.model('courses', courseSchema);
 const purchaseModel = mongoose.model('purchase', purchaseSchema);
 
